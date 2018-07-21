@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gxc.mapper.TDormbuildMapper">
+	<resultMap id="BaseResultMap" type="com.gxc.entity.TDormbuild">
+		<id column="dormBuildId" property="dormbuildid" jdbcType="INTEGER" />
+		<result column="dormBuildName" property="dormbuildname"
+			jdbcType="VARCHAR" />
+		<result column="dormBuildDetail" property="dormbuilddetail"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		dormBuildId, dormBuildName, dormBuildDetail
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gxc.entity.TDormbuildExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from t_dormbuild
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_dormbuild
+		where dormBuildId = #{dormbuildid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_dormbuild
+		where dormBuildId = #{dormbuildid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gxc.entity.TDormbuildExample">
+		delete from t_dormbuild
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gxc.entity.TDormbuild">
+		insert into t_dormbuild (dormBuildId, dormBuildName, dormBuildDetail
+		)
+		values (#{dormbuildid,jdbcType=INTEGER}, #{dormbuildname,jdbcType=VARCHAR},
+		#{dormbuilddetail,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.gxc.entity.TDormbuild">
+		insert into t_dormbuild
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="dormbuildid != null">
+				dormBuildId,
+			</if>
+			<if test="dormbuildname != null">
+				dormBuildName,
+			</if>
+			<if test="dormbuilddetail != null">
+				dormBuildDetail,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="dormbuildid != null">
+				#{dormbuildid,jdbcType=INTEGER},
+			</if>
+			<if test="dormbuildname != null">
+				#{dormbuildname,jdbcType=VARCHAR},
+			</if>
+			<if test="dormbuilddetail != null">
+				#{dormbuilddetail,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.gxc.entity.TDormbuildExample"
+		resultType="java.lang.Integer">
+		select count(*) from t_dormbuild
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update t_dormbuild
+		<set>
+			<if test="record.dormbuildid != null">
+				dormBuildId = #{record.dormbuildid,jdbcType=INTEGER},
+			</if>
+			<if test="record.dormbuildname != null">
+				dormBuildName = #{record.dormbuildname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.dormbuilddetail != null">
+				dormBuildDetail = #{record.dormbuilddetail,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update t_dormbuild
+		set dormBuildId = #{record.dormbuildid,jdbcType=INTEGER},
+		dormBuildName = #{record.dormbuildname,jdbcType=VARCHAR},
+		dormBuildDetail = #{record.dormbuilddetail,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gxc.entity.TDormbuild">
+		update t_dormbuild
+		<set>
+			<if test="dormbuildname != null">
+				dormBuildName = #{dormbuildname,jdbcType=VARCHAR},
+			</if>
+			<if test="dormbuilddetail != null">
+				dormBuildDetail = #{dormbuilddetail,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where dormBuildId = #{dormbuildid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gxc.entity.TDormbuild">
+		update t_dormbuild
+		set dormBuildName = #{dormbuildname,jdbcType=VARCHAR},
+		dormBuildDetail = #{dormbuilddetail,jdbcType=VARCHAR}
+		where dormBuildId = #{dormbuildid,jdbcType=INTEGER}
+	</update>
+</mapper>

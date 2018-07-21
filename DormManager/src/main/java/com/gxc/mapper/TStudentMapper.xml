@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gxc.mapper.TStudentMapper">
+	<resultMap id="BaseResultMap" type="com.gxc.entity.TStudent">
+		<id column="studentId" property="studentid" jdbcType="INTEGER" />
+		<result column="stuNum" property="stunum" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="dormName" property="dormname" jdbcType="VARCHAR" />
+		<result column="dormBuildId" property="dormbuildid" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="tel" property="tel" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		studentId, stuNum, password, name, dormName, dormBuildId, sex, tel
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gxc.entity.TStudentExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from t_student
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_student
+		where studentId = #{studentid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_student
+		where studentId = #{studentid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gxc.entity.TStudentExample">
+		delete from t_student
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gxc.entity.TStudent">
+		insert into t_student (studentId, stuNum, password,
+		name, dormName, dormBuildId,
+		sex, tel)
+		values (#{studentid,jdbcType=INTEGER}, #{stunum,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR}, #{dormname,jdbcType=VARCHAR}, #{dormbuildid,jdbcType=INTEGER},
+		#{sex,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gxc.entity.TStudent">
+		insert into t_student
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="studentid != null">
+				studentId,
+			</if>
+			<if test="stunum != null">
+				stuNum,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="dormname != null">
+				dormName,
+			</if>
+			<if test="dormbuildid != null">
+				dormBuildId,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="tel != null">
+				tel,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="studentid != null">
+				#{studentid,jdbcType=INTEGER},
+			</if>
+			<if test="stunum != null">
+				#{stunum,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="dormname != null">
+				#{dormname,jdbcType=VARCHAR},
+			</if>
+			<if test="dormbuildid != null">
+				#{dormbuildid,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="tel != null">
+				#{tel,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.gxc.entity.TStudentExample"
+		resultType="java.lang.Integer">
+		select count(*) from t_student
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update t_student
+		<set>
+			<if test="record.studentid != null">
+				studentId = #{record.studentid,jdbcType=INTEGER},
+			</if>
+			<if test="record.stunum != null">
+				stuNum = #{record.stunum,jdbcType=VARCHAR},
+			</if>
+			<if test="record.password != null">
+				password = #{record.password,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.dormname != null">
+				dormName = #{record.dormname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.dormbuildid != null">
+				dormBuildId = #{record.dormbuildid,jdbcType=INTEGER},
+			</if>
+			<if test="record.sex != null">
+				sex = #{record.sex,jdbcType=VARCHAR},
+			</if>
+			<if test="record.tel != null">
+				tel = #{record.tel,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update t_student
+		set studentId = #{record.studentid,jdbcType=INTEGER},
+		stuNum = #{record.stunum,jdbcType=VARCHAR},
+		password = #{record.password,jdbcType=VARCHAR},
+		name = #{record.name,jdbcType=VARCHAR},
+		dormName = #{record.dormname,jdbcType=VARCHAR},
+		dormBuildId = #{record.dormbuildid,jdbcType=INTEGER},
+		sex = #{record.sex,jdbcType=VARCHAR},
+		tel = #{record.tel,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gxc.entity.TStudent">
+		update t_student
+		<set>
+			<if test="stunum != null">
+				stuNum = #{stunum,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="dormname != null">
+				dormName = #{dormname,jdbcType=VARCHAR},
+			</if>
+			<if test="dormbuildid != null">
+				dormBuildId = #{dormbuildid,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="tel != null">
+				tel = #{tel,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where studentId = #{studentid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gxc.entity.TStudent">
+		update t_student
+		set stuNum = #{stunum,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		dormName = #{dormname,jdbcType=VARCHAR},
+		dormBuildId = #{dormbuildid,jdbcType=INTEGER},
+		sex = #{sex,jdbcType=VARCHAR},
+		tel = #{tel,jdbcType=VARCHAR}
+		where studentId = #{studentid,jdbcType=INTEGER}
+	</update>
+</mapper>
